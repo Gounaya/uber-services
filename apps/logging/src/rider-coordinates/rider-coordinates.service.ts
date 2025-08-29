@@ -7,10 +7,15 @@ import { RiderCoordinate } from './schemas/rider-coordinates.schema';
 
 @Injectable()
 export class RiderCoordinatesService {
+    
     constructor(
         @InjectModel(RiderCoordinate.name)
         private riderCoordinatesModel: Model<RiderCoordinate>
     ){}
+
+    async getRiderCoordinates() {
+        return await this.riderCoordinatesModel.find();
+    }
 
     async saveRiderCoordinates(CreateCoordinateDto: CreateCoordinatesDto) {
         return await this.riderCoordinatesModel.create(CreateCoordinateDto);
