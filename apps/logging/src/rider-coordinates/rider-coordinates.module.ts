@@ -3,9 +3,18 @@ import { RiderCoordinatesController } from './rider-coordinates.controller';
 import { RiderCoordinatesService } from './rider-coordinates.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RiderCoordinateSchema } from './schemas/rider-coordinates.schema';
+import { Client, ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'RiderCoordinate', schema: RiderCoordinateSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: 'RiderCoordinate', schema: RiderCoordinateSchema }]),
+    ClientsModule.register([
+      {
+        name: 'RIDER_SERVICE',
+        transport: Transport.TCP,
+      },
+    ]),
+  ],
   controllers: [RiderCoordinatesController],
   providers: [RiderCoordinatesService]
 })
