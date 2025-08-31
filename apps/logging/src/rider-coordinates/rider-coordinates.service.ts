@@ -17,11 +17,16 @@ export class RiderCoordinatesService {
     ){}
 
     async getRiderCoordinates(riderId: string) {
-        const coordinates = await this.riderCoordinatesModel.find({ rider: riderId });
-        const pattern = { cmd: 'get-rider' };
-        const payload = { id: riderId };
-        const rider = await firstValueFrom(this.client.send(pattern, payload));
-        return { coordinates, rider };
+        try {
+            const coordinates = await this.riderCoordinatesModel.find({ rider: riderId });
+            const pattern = { cmd: 'get-rider' };
+            const payload = { id: riderId };
+            const rider = await firstValueFrom(this.client.send(pattern, payload));
+            return { coordinates, rider };
+        } catch (error) {
+            console.error('Error connecting to microservice:', error);
+            throw new Error('Error retrieving rider coordinates');
+        }
     }
 
     async saveRiderCoordinates(CreateCoordinateDto: CreateCoordinatesDto) {
