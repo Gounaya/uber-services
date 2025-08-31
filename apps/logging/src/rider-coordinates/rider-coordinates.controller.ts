@@ -7,7 +7,7 @@ export class RiderCoordinatesController {
 
     constructor(private riderCoordinatesService: RiderCoordinatesService) {}
 
-    @Get()
+    @Get(":id")
     getRiderCoordinates(
         @Param() 
         params: any
